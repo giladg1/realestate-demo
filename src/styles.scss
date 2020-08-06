@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+
+.ag-theme-alpine {
+  @include ag-theme-alpine();
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: auto;
+  background-color: #f1f1f1;
+}
+
+.mapboxgl-map {
+  // Override the default fonts of mapbox, this ones looks better
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;
+}
+
+// global classes for elements of the map
+.mapboxgl-popup-content {
+  width: 100%;
+  cursor: pointer;
+  padding: 7px 7px 7px !important;
+}
+
+.popup-marker-header {
+  margin:0
+}
+
+.popup-marker-text-div {
+  display: flex;
+  justify-content: space-between;
+
+  .text-elem {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
