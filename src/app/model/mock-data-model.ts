@@ -7,5 +7,6 @@ export interface MockDataModel {
   totalUnits: number,
   latitude: number,
   longitude: number,
+  hex: string,
   selected: boolean
 }

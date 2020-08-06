@@ -38,3 +38,10 @@ body {
     margin-bottom: 0;
   }
 }
+
+// ag-grid custom
+.ag-checkbox-input-wrapper {
+  .ag-input-field-input {
+    cursor: pointer;
+  }
+}

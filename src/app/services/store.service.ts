@@ -20,6 +20,7 @@ export class StoreService {
       totalUnits: 256,
       latitude: 29.7722573,
       longitude: -95.3982908,
+      hex: '#2196f3',
       selected: true
     },
     {
@@ -31,6 +32,7 @@ export class StoreService {
       totalUnits: 326,
       latitude: 29.770153,
       longitude: -95.4002315,
+      hex: '#93b286',
       selected: false
     },
     {
@@ -42,6 +44,7 @@ export class StoreService {
       totalUnits: 232,
       latitude: 29.7689996,
       longitude: -95.3965217,
+      hex: '#ecc0ff',
       selected: false
     },
     {
@@ -53,6 +56,7 @@ export class StoreService {
       totalUnits: 283,
       latitude: 29.7746407,
       longitude: -95.4017333,
+      hex: '#fff6c0',
       selected: false
     },
     {
@@ -64,6 +68,7 @@ export class StoreService {
       totalUnits: 256,
       latitude: 29.7682588,
       longitude: -95.3948332,
+      hex: '#ff88bb',
       selected: false
     }
   ]

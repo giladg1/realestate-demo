@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
 import {StoreService} from "../../services/store.service";
 import {takeUntil} from "rxjs/operators";
@@ -9,35 +9,19 @@ import {MockDataModel} from "../../model/mock-data-model";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
+  // When window size is changing we want to auto size the ag-grid column to the screen size
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.agGrid.api.sizeColumnsToFit()
+  }
   ngUnSubscribe: Subject<void> = new Subject<void>();
   columnDefs = [];
   rowData = [];
-  constructor(private storeService: StoreService) { }
-
-  /**
-   * Prepare header names and data to populate ag-grid
-   */
-  ngOnInit(): void {
-    this.columnDefs = [
-      {headerName: 'NAME', field: 'name', checkboxSelection: true },
-      {headerName: 'YEAR BUILT', field: 'yearBuilt' },
-      {headerName: 'GLA', field: 'gla'},
-      {headerName: 'RENT PER UNIT', field: 'rentPerUnit'},
-      {headerName: 'RENT SQFT', field: 'rentSqFt'},
-      {headerName: 'TOTAL UNITS', field: 'totalUnits'}
-    ];
-    this.storeService.getData()
-      .pipe(takeUntil(this.ngUnSubscribe))
-      .subscribe((data: Array<MockDataModel>) => {
-        this.rowData = data;
-      })
+  constructor(private storeService: StoreService) {
   }
-
-  ngOnDestroy() {
-    this.ngUnSubscribe.next();
-    this.ngUnSubscribe.complete();
-  }
+  // get the ag-grid element
+  @ViewChild('agGridElem') agGrid;
 
   /**
    * When marking check or uncheck for a field item, we need to update the data
@@ -53,6 +37,39 @@ export class TableComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+
+  /**
+   * Prepare header names and data to populate ag-grid
+   */
+  ngOnInit(): void {
+    this.columnDefs = [
+      {headerName: '', field: 'checked', checkboxSelection: true, width: 50},
+      {headerName: 'NAME', field: 'name'},
+      {headerName: 'YEAR BUILT', field: 'yearBuilt' },
+      {headerName: 'GLA', field: 'gla'},
+      {headerName: 'RENT PER UNIT', field: 'rentPerUnit'},
+      {headerName: 'RENT SQFT', field: 'rentSqFt'},
+      {headerName: 'TOTAL UNITS', field: 'totalUnits'}
+    ];
+    this.storeService.getData()
+      .pipe(takeUntil(this.ngUnSubscribe))
+      .subscribe((data: Array<MockDataModel>) => {
+        this.rowData = data;
+      })
+  }
+
+  /**
+   * After view loaded, we want to auto size the ag-grid column
+   */
+  ngAfterViewInit() {
+    console.log(this.agGrid);
+    this.agGrid.api.sizeColumnsToFit()
+  }
+
+  ngOnDestroy() {
+    this.ngUnSubscribe.next();
+    this.ngUnSubscribe.complete();
   }
 
 }
